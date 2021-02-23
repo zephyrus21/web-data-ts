@@ -19,12 +19,14 @@ export class User {
     Object.assign(this.data, update);
   }
 
+  //! this will create event with callback function
   on(eventName: string, callback: Callback): void {
     const handlers = this.events[eventName] || [];
     handlers.push(callback);
     this.events[eventName] = handlers;
   }
 
+  //! this will trigger the callback function of the event when called
   trigger(eventName: string): void {
     const handlers = this.events[eventName];
 
