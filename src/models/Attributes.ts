@@ -5,7 +5,11 @@ export class Attributes<T> {
   //* i.e T can be any value of id, name, age but K can only be any one value of id, name, age
   get = <K extends keyof T>(key: K): T[K] => this.data[key];
 
-  set(update: T): void {
+  set = (update: T): void => {
     Object.assign(this.data, update);
-  }
+  };
+
+  getAll = (): T => {
+    return this.data;
+  };
 }
