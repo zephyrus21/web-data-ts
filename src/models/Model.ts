@@ -1,4 +1,4 @@
-import { AxiosPromise, AxiosResponse } from 'axios';
+import { AxiosError, AxiosPromise, AxiosResponse } from 'axios';
 
 type Callback = () => void;
 
@@ -49,9 +49,14 @@ export class Model<T extends HasID> {
   fetch = (): void => {
     const id = this.get('id');
     if (typeof id !== 'number') throw new Error('id must be a number');
-    this.sync.fetch(id).then((response: AxiosResponse): void => {
-      this.set(response.data);
-    });
+    this.sync
+      .fetch(id)
+      .then((response: AxiosResponse): void => {
+        this.set(response.data);
+      })
+      .catch((error: AxiosError): void => {
+        console.log('Error! User not found.');
+      });
   };
 
   save = (): void => {
